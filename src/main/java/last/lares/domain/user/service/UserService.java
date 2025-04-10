@@ -4,6 +4,7 @@ import last.lares.domain.user.User;
 import last.lares.domain.user.presentation.dto.RegisterDto;
 import last.lares.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     // 회원 가입
     @Transactional
@@ -29,8 +31,7 @@ public class UserService {
             throw new IllegalArgumentException("비밀번호가 충분히 강력하지 않습니다.");
         }
 
-        /* 비밀 번호 암호화 추가 */
-        String userPassword = "";
+        String userPassword = bCryptPasswordEncoder.encode(rowPassword);
 
         User user = User.builder()
                 .userId(userId)
