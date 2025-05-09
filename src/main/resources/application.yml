@@ -8,8 +8,6 @@ spring:
     password: ${DB_PW}
   jpa:
     hibernate:
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
       ddl-auto: none
     generate-ddl: false
     properties:
@@ -19,6 +17,8 @@ spring:
     allow-bean-definition-overriding: true
 
 server:
+  servlet:
+    context-path: /lares/api
   forward-headers-strategy: NATIVE
 
 jwt:
