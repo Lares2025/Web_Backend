@@ -3,6 +3,7 @@ package last.lares.domain.user.service;
 import last.lares.domain.user.User;
 import last.lares.domain.user.presentation.dto.RegisterDto;
 import last.lares.domain.user.repository.UserRepository;
+import last.lares.domain.user.types.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,7 @@ public class UserService {
                 .userName(request.getUserName())
                 .userPassword(userPassword)
                 .userAddress(request.getUserAddress())
+                .userRole(UserRole.ROLE_USER)
                 .userCreatedAt(LocalDateTime.now())
                 .build();
 
