@@ -25,6 +25,7 @@ public class User {
 
     private String userAddress;
 
+    @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
     private LocalDateTime userCreatedAt;
