@@ -52,7 +52,9 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(
                         auth -> auth
-                                .anyRequest().permitAll()
+                                .requestMatchers("/user/register").permitAll()
+
+                                .anyRequest().authenticated()
                 )
 
                 .addFilterBefore(new JwtFilter(objectMapper, jwtUtil), UsernamePasswordAuthenticationFilter.class)
