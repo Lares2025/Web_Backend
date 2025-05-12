@@ -1,6 +1,7 @@
 package last.lares.global.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import last.lares.global.config.filter.JwtFilter;
 import last.lares.global.config.filter.LoginFilter;
 import last.lares.global.config.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -53,6 +54,8 @@ public class SecurityConfig {
                         auth -> auth
                                 .anyRequest().permitAll()
                 )
+
+                .addFilterBefore(new JwtFilter(objectMapper, jwtUtil), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class)
 
                 .sessionManagement(
