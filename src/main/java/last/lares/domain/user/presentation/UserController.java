@@ -1,19 +1,29 @@
 package last.lares.domain.user.presentation;
 
 import last.lares.domain.user.presentation.dto.RegisterDto;
+import last.lares.domain.user.presentation.dto.UserListDto;
 import last.lares.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/user", produces = "application/json")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+
+    @GetMapping("/")
+    public ResponseEntity<?> allUserList() {
+        try {
+            UserListDto response = userService.allUserList();
+
+            return ResponseEntity.ok().body(response);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("내부 서버 에러가 발생하였습니다.");
+        }
+    }
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterDto.Request request) {

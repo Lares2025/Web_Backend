@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Builder
 @Entity
@@ -29,4 +30,8 @@ public class User {
     private UserRole userRole;
 
     private LocalDateTime userCreatedAt;
+
+    public String getUserCreatedAt() {
+        return userCreatedAt.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일"));
+    }
 }

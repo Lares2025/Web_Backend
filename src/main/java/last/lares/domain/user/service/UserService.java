@@ -2,6 +2,7 @@ package last.lares.domain.user.service;
 
 import last.lares.domain.user.User;
 import last.lares.domain.user.presentation.dto.RegisterDto;
+import last.lares.domain.user.presentation.dto.UserListDto;
 import last.lares.domain.user.repository.UserRepository;
 import last.lares.domain.user.types.UserRole;
 import lombok.RequiredArgsConstructor;
@@ -10,12 +11,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    // 모든 사용자 읽기
+    @Transactional
+    public UserListDto allUserList() {
+        List<User> userList = userRepository.findAll();
+
+        return createUserInfoList(userList);
+    }
 
     // 회원 가입
     @Transactional
@@ -56,5 +66,22 @@ public class UserService {
                 password.matches(".*[a-z].*") &&
                 password.matches(".*\\d.*") &&
                 password.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?].*");
+    }
+
+    // UserListDto 생성
+    private UserListDto createUserInfoList(List<User> userList) {
+        List<UserListDto.UserInfo> userInfoList = userList.stream()
+                .map(user -> UserListDto.UserInfo.builder()
+                        .userId(user.getUserId())
+                        .userName(user.getUserName())
+                        .userAddress(user.getUserAddress())
+                        .userRole(user.getUserRole().name())
+                        .userCreatedAt(user.getUserCreatedAt())
+                        .build()
+                ).toList();
+
+        return UserListDto.builder()
+                .userList(userInfoList)
+                .build();
     }
 }
