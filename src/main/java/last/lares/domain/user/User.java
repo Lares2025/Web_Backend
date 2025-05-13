@@ -32,6 +32,6 @@ public class User {
     private LocalDateTime userCreatedAt;
 
     public String getUserCreatedAt() {
-        return userCreatedAt.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일"));
+        return userCreatedAt.format(DateTimeFormatter.ofPattern("yy년 MM월 dd일"));
     }
 }
