@@ -45,4 +45,19 @@ public class UserController {
             return ResponseEntity.internalServerError().body(response);
         }
     }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<?> deleteUser(@PathVariable String userId) {
+        try {
+            CommonResponseDto response = userService.deleteUser(userId);
+
+            return ResponseEntity.ok().body(response);
+        } catch (Exception e) {
+            CommonResponseDto response = CommonResponseDto.builder()
+                    .message("내부 서버 에러가 발생하였습니다.")
+                    .build();
+
+            return ResponseEntity.internalServerError().body(response);
+        }
+    }
 }

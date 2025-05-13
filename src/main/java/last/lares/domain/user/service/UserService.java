@@ -7,6 +7,7 @@ import last.lares.domain.user.repository.UserRepository;
 import last.lares.domain.user.types.UserRole;
 import last.lares.global.dto.CommonResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,10 +57,21 @@ public class UserService {
 
         userRepository.save(user);
 
-        return CommonResponseDto.builder()
-                .message("회원 가입에 성공하였습니다!")
-                .build();
+        return createCommonResponse("회원 가입에 성공하였습니다!");
     }
+
+    // 특정 사용자 삭제
+    @Transactional
+    public CommonResponseDto deleteUser(String userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new UsernameNotFoundException("존재하지 않는 사용자입니다 : " + userId);
+        }
+
+        userRepository.deleteById(userId);
+
+        return createCommonResponse("사용자가 정상적으로 삭제되었습니다!");
+    }
+
 
     // 비밀번호 강도 로직 검사
     private boolean isPasswordStrong(String password) {
@@ -67,6 +79,12 @@ public class UserService {
                 password.matches(".*[a-z].*") &&
                 password.matches(".*\\d.*") &&
                 password.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?].*");
+    }
+
+    private CommonResponseDto createCommonResponse(String message) {
+        return CommonResponseDto.builder()
+                .message(message)
+                .build();
     }
 
     // UserListDto 생성
