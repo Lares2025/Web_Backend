@@ -1,10 +1,11 @@
 package last.lares.domain.user.service;
 
 import last.lares.domain.user.User;
-import last.lares.domain.user.presentation.dto.RegisterDto;
+import last.lares.domain.user.presentation.dto.RegisterRequestDto;
 import last.lares.domain.user.presentation.dto.UserListDto;
 import last.lares.domain.user.repository.UserRepository;
 import last.lares.domain.user.types.UserRole;
+import last.lares.global.dto.CommonResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class UserService {
 
     // 회원 가입
     @Transactional
-    public RegisterDto.Response register(RegisterDto.Request request) {
+    public CommonResponseDto register(RegisterRequestDto request) {
         String userId = request.getUserId();
         if (userRepository.existsById(userId)) {
             throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
@@ -55,7 +56,7 @@ public class UserService {
 
         userRepository.save(user);
 
-        return RegisterDto.Response.builder()
+        return CommonResponseDto.builder()
                 .message("회원 가입에 성공하였습니다!")
                 .build();
     }

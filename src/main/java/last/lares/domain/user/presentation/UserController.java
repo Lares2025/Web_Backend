@@ -1,10 +1,10 @@
 package last.lares.domain.user.presentation;
 
-import last.lares.domain.user.presentation.dto.RegisterDto;
+import last.lares.domain.user.presentation.dto.RegisterRequestDto;
 import last.lares.domain.user.presentation.dto.UserListDto;
 import last.lares.domain.user.service.UserService;
+import last.lares.global.dto.CommonResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,19 +26,19 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterDto.Request request) {
+    public ResponseEntity<?> register(@RequestBody RegisterRequestDto request) {
         try {
-            RegisterDto.Response response = userService.register(request);
+            CommonResponseDto response = userService.register(request);
 
             return ResponseEntity.ok().body(response);
         } catch (IllegalArgumentException e) {
-            RegisterDto.Response response = RegisterDto.Response.builder()
+            CommonResponseDto response = CommonResponseDto.builder()
                     .message(e.getMessage())
                     .build();
 
             return ResponseEntity.badRequest().body(response);
         } catch (Exception e) {
-            RegisterDto.Response response = RegisterDto.Response.builder()
+            CommonResponseDto response = CommonResponseDto.builder()
                     .message("내부 서버 에러가 발생하였습니다.")
                     .build();
 
