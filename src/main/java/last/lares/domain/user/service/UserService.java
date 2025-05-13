@@ -56,9 +56,7 @@ public class UserService {
 
         userRepository.save(user);
 
-        return CommonResponseDto.builder()
-                .message("회원 가입에 성공하였습니다!")
-                .build();
+        return createCommonResponse("회원 가입에 성공하였습니다!");
     }
 
     // 비밀번호 강도 로직 검사
@@ -67,6 +65,12 @@ public class UserService {
                 password.matches(".*[a-z].*") &&
                 password.matches(".*\\d.*") &&
                 password.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?].*");
+    }
+
+    private CommonResponseDto createCommonResponse(String message) {
+        return CommonResponseDto.builder()
+                .message(message)
+                .build();
     }
 
     // UserListDto 생성
