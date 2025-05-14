@@ -13,6 +13,7 @@ public class RobotListDto {
     @Builder
     @Getter
     public static class RobotInfo {
+        private int robotId;
         private String robotIp;
         private String robotName;
         private String robotCreatedAt;

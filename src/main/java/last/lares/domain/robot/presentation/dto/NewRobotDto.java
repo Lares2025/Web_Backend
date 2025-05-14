@@ -6,6 +6,9 @@ import lombok.Getter;
 @Builder
 @Getter
 public class NewRobotDto {
-    private String robotIp;
+    private int robotIp1;
+    private int robotIp2;
+    private int robotIp3;
+    private int robotIp4;
     private String robotName;
 }

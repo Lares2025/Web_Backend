@@ -28,13 +28,11 @@ public class RobotService {
 
     @Transactional
     public CommonResponseDto newRobot(NewRobotDto request) {
-        String robotIp = request.getRobotIp();
-        if (robotRepository.existsById(robotIp)) {
-            throw new IllegalArgumentException("이미 등록된 로봇입니다.");
-        }
-
         Robot robot = Robot.builder()
-                .robotIp(robotIp)
+                .robotIp1(request.getRobotIp1())
+                .robotIp2(request.getRobotIp2())
+                .robotIp3(request.getRobotIp3())
+                .robotIp4(request.getRobotIp4())
                 .robotName(request.getRobotName())
                 .robotCreatedAt(LocalDateTime.now())
                 .build();
@@ -53,6 +51,7 @@ public class RobotService {
     private RobotListDto createRobotInfoList(List<Robot> robotList) {
         List<RobotListDto.RobotInfo> robotInfoList = robotList.stream()
                 .map(robot -> RobotListDto.RobotInfo.builder()
+                        .robotId(robot.getRobotId())
                         .robotIp(robot.getRobotIp())
                         .robotName(robot.getRobotName())
                         .robotCreatedAt(robot.getRobotCreatedAt())
