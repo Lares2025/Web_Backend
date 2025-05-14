@@ -4,8 +4,6 @@ import last.lares.domain.robot.Robot;
 import last.lares.domain.robot.presentation.dto.NewRobotDto;
 import last.lares.domain.robot.presentation.dto.RobotListDto;
 import last.lares.domain.robot.repository.RobotRepository;
-import last.lares.domain.user.User;
-import last.lares.domain.user.presentation.dto.UserListDto;
 import last.lares.global.dto.CommonResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
