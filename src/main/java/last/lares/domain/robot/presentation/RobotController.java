@@ -24,6 +24,7 @@ public class RobotController {
             return ResponseEntity.internalServerError().body("내부 서버 에러가 발생하였습니다.");
         }
     }
+
     @PostMapping("/")
     public ResponseEntity<?> newRobot(@RequestBody NewRobotDto request) {
         try {
