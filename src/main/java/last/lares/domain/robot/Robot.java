@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Builder
 @Entity
@@ -23,4 +24,8 @@ public class Robot {
     private String robotName;
 
     private LocalDateTime robotCreatedAt;
+
+    public String getRobotCreatedAt() {
+        return robotCreatedAt.format(DateTimeFormatter.ofPattern("yy년 MM월 dd일"));
+    }
 }
