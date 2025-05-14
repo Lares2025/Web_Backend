@@ -46,4 +46,19 @@ public class RobotController {
             return ResponseEntity.internalServerError().body(response);
         }
     }
+
+    @DeleteMapping("/{robotId}")
+    public ResponseEntity<?> deleteRobot(@PathVariable int robotId) {
+        try {
+            CommonResponseDto response = robotService.deleteRobot(robotId);
+
+            return ResponseEntity.ok().body(response);
+        } catch (Exception e) {
+            CommonResponseDto response = CommonResponseDto.builder()
+                    .message("내부 에러가 발생하였습니다.")
+                    .build();
+
+            return ResponseEntity.internalServerError().body(response);
+        }
+    }
 }

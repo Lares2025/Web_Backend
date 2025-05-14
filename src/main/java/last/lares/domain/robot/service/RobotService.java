@@ -6,6 +6,7 @@ import last.lares.domain.robot.presentation.dto.RobotListDto;
 import last.lares.domain.robot.repository.RobotRepository;
 import last.lares.global.dto.CommonResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +39,17 @@ public class RobotService {
         robotRepository.save(robot);
 
         return createCommonResponse("신규 등록에 성공하였습니다!");
+    }
+
+    @Transactional
+    public CommonResponseDto deleteRobot(int robotId) {
+        if (!robotRepository.existsById(robotId)) {
+            throw new UsernameNotFoundException("존재하지 않는 로봇입니다 : " + robotId);
+        }
+
+        robotRepository.deleteById(robotId);
+
+        return createCommonResponse("로봇이 정상적으로 삭제되었습니다!");
     }
 
     private CommonResponseDto createCommonResponse(String message) {
