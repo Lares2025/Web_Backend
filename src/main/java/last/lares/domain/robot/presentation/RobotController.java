@@ -5,6 +5,7 @@ import last.lares.domain.robot.service.RobotService;
 import last.lares.domain.robot.presentation.dto.RobotDto;
 import last.lares.global.dto.CommonResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,23 @@ public class RobotController {
             RobotListDto response = robotService.allRobot();
 
             return ResponseEntity.ok().body(response);
+        } catch (Exception e) {
+            return createInternalServerError();
+        }
+    }
+
+    @GetMapping("/{robotId}")
+    public ResponseEntity<?> readRobot(@PathVariable int robotId) {
+        try {
+            RobotListDto.RobotInfo response = robotService.readRobot(robotId);
+
+            return ResponseEntity.ok().body(response);
+        } catch (UsernameNotFoundException e) {
+            CommonResponseDto response = CommonResponseDto.builder()
+                    .message(e.getMessage())
+                    .build();
+
+            return ResponseEntity.internalServerError().body(response);
         } catch (Exception e) {
             return createInternalServerError();
         }
