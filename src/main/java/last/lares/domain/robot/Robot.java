@@ -43,9 +43,9 @@ public class Robot {
 
     public void update(RobotDto request) {
         setRobotIp1(request.getRobotIp1());
-        setRobotIp1(request.getRobotIp2());
-        setRobotIp1(request.getRobotIp3());
-        setRobotIp1(request.getRobotIp4());
+        setRobotIp2(request.getRobotIp2());
+        setRobotIp3(request.getRobotIp3());
+        setRobotIp4(request.getRobotIp4());
         setRobotName(request.getRobotName());
     }
 }
