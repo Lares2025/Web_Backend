@@ -6,6 +6,7 @@ import last.lares.domain.robot.presentation.dto.RobotDto;
 import last.lares.global.dto.CommonResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,7 +22,7 @@ public class RobotController {
 
             return ResponseEntity.ok().body(response);
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("내부 서버 에러가 발생하였습니다.");
+            return createInternalServerError();
         }
     }
 
@@ -31,19 +32,8 @@ public class RobotController {
             CommonResponseDto response = robotService.newRobot(request);
 
             return ResponseEntity.ok().body(response);
-        } catch (IllegalArgumentException e) {
-            CommonResponseDto response = CommonResponseDto.builder()
-                    .message(e.getMessage())
-                    .build();
-
-            return ResponseEntity.badRequest().body(response);
-        }
-        catch (Exception e) {
-            CommonResponseDto response = CommonResponseDto.builder()
-                    .message("내부 에러가 발생하였습니다.")
-                    .build();
-
-            return ResponseEntity.internalServerError().body(response);
+        } catch (Exception e) {
+            return createInternalServerError();
         }
     }
 
@@ -53,12 +43,14 @@ public class RobotController {
             CommonResponseDto response = robotService.updateRobot(robotId, robotDto);
 
             return ResponseEntity.ok().body(response);
-        } catch (Exception e) {
+        } catch (UsernameNotFoundException e) {
             CommonResponseDto response = CommonResponseDto.builder()
-                    .message("내부 에러가 발생하였습니다.")
+                    .message(e.getMessage())
                     .build();
 
             return ResponseEntity.internalServerError().body(response);
+        } catch (Exception e) {
+            return createInternalServerError();
         }
     }
 
@@ -68,12 +60,22 @@ public class RobotController {
             CommonResponseDto response = robotService.deleteRobot(robotId);
 
             return ResponseEntity.ok().body(response);
-        } catch (Exception e) {
+        } catch (UsernameNotFoundException e) {
             CommonResponseDto response = CommonResponseDto.builder()
-                    .message("내부 에러가 발생하였습니다.")
+                    .message(e.getMessage())
                     .build();
 
             return ResponseEntity.internalServerError().body(response);
+        } catch (Exception e) {
+            return createInternalServerError();
         }
+    }
+
+    private ResponseEntity<?> createInternalServerError() {
+        CommonResponseDto response = CommonResponseDto.builder()
+                .message("내부 서버 에러가 발생하였습니다.")
+                .build();
+
+        return ResponseEntity.internalServerError().body(response);
     }
 }
