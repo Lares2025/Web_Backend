@@ -55,6 +55,8 @@ public class SecurityConfig {
                                 .requestMatchers("/user/register").permitAll()
                                 .requestMatchers("/user/**").hasRole("ADMIN")
 
+                                .requestMatchers("/robot/**").hasRole("ADMIN")
+
                                 .anyRequest().authenticated()
                 )
 
