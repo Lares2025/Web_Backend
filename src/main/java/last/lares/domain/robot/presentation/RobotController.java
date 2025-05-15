@@ -2,7 +2,7 @@ package last.lares.domain.robot.presentation;
 
 import last.lares.domain.robot.presentation.dto.RobotListDto;
 import last.lares.domain.robot.service.RobotService;
-import last.lares.domain.robot.presentation.dto.NewRobotDto;
+import last.lares.domain.robot.presentation.dto.RobotDto;
 import last.lares.global.dto.CommonResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +26,7 @@ public class RobotController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<?> newRobot(@RequestBody NewRobotDto request) {
+    public ResponseEntity<?> newRobot(@RequestBody RobotDto request) {
         try {
             CommonResponseDto response = robotService.newRobot(request);
 

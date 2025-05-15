@@ -1,7 +1,7 @@
 package last.lares.domain.robot.service;
 
 import last.lares.domain.robot.Robot;
-import last.lares.domain.robot.presentation.dto.NewRobotDto;
+import last.lares.domain.robot.presentation.dto.RobotDto;
 import last.lares.domain.robot.presentation.dto.RobotListDto;
 import last.lares.domain.robot.repository.RobotRepository;
 import last.lares.global.dto.CommonResponseDto;
@@ -26,7 +26,7 @@ public class RobotService {
     }
 
     @Transactional
-    public CommonResponseDto newRobot(NewRobotDto request) {
+    public CommonResponseDto newRobot(RobotDto request) {
         Robot robot = Robot.builder()
                 .robotIp1(request.getRobotIp1())
                 .robotIp2(request.getRobotIp2())

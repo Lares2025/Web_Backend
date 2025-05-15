@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class NewRobotDto {
+public class RobotDto {
     private int robotIp1;
     private int robotIp2;
     private int robotIp3;
