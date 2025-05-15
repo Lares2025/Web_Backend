@@ -1,6 +1,7 @@
 package last.lares.domain.robot;
 
 import jakarta.persistence.*;
+import last.lares.domain.robot.presentation.dto.RobotDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -38,5 +39,13 @@ public class Robot {
 
     public String getRobotCreatedAt() {
         return robotCreatedAt.format(DateTimeFormatter.ofPattern("yy년 MM월 dd일"));
+    }
+
+    public void update(RobotDto request) {
+        setRobotIp1(request.getRobotIp1());
+        setRobotIp1(request.getRobotIp2());
+        setRobotIp1(request.getRobotIp3());
+        setRobotIp1(request.getRobotIp4());
+        setRobotName(request.getRobotName());
     }
 }

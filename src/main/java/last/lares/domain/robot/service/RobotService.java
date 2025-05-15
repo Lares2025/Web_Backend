@@ -42,6 +42,16 @@ public class RobotService {
     }
 
     @Transactional
+    public CommonResponseDto updateRobot(int robotId, RobotDto request) {
+        Robot robot = robotRepository.findById(robotId)
+                .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 로봇입니다 : " + robotId));
+
+        robot.update(request);
+
+        return createCommonResponse("로봇이 정상적으로 수정되었습니다!");
+    }
+
+    @Transactional
     public CommonResponseDto deleteRobot(int robotId) {
         if (!robotRepository.existsById(robotId)) {
             throw new UsernameNotFoundException("존재하지 않는 로봇입니다 : " + robotId);
