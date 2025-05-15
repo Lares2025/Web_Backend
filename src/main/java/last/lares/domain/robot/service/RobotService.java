@@ -26,6 +26,19 @@ public class RobotService {
     }
 
     @Transactional
+    public RobotListDto.RobotInfo readRobot(int robotId) {
+        Robot robot = robotRepository.findById(robotId)
+                .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 로봇입니다 : " + robotId));
+
+        return RobotListDto.RobotInfo.builder()
+                .robotId(robotId)
+                .robotIp(robot.getRobotIp())
+                .robotName(robot.getRobotName())
+                .robotCreatedAt(robot.getRobotCreatedAt())
+                .build();
+    }
+
+    @Transactional
     public CommonResponseDto newRobot(RobotDto request) {
         Robot robot = Robot.builder()
                 .robotIp1(request.getRobotIp1())
