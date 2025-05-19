@@ -57,6 +57,8 @@ public class SecurityConfig {
 
                                 .requestMatchers("/robot/**").hasRole("ADMIN")
 
+                                .requestMatchers("/control/**").hasRole("ADMIN")
+
                                 .anyRequest().authenticated()
                 )
 

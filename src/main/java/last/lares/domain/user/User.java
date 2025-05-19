@@ -1,6 +1,8 @@
 package last.lares.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import last.lares.domain.control.ControlData;
 import last.lares.domain.user.types.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Builder
 @Entity
@@ -30,6 +33,14 @@ public class User {
     private UserRole userRole;
 
     private LocalDateTime userCreatedAt;
+
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JsonManagedReference
+    private List<ControlData> controlDataList;
 
     public String getUserCreatedAt() {
         return userCreatedAt.format(DateTimeFormatter.ofPattern("yy년 MM월 dd일"));

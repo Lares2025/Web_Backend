@@ -1,6 +1,8 @@
 package last.lares.domain.robot;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import last.lares.domain.control.ControlData;
 import last.lares.domain.robot.presentation.dto.RobotDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Builder
 @Entity
@@ -32,6 +35,14 @@ public class Robot {
     private String robotName;
 
     private LocalDateTime robotCreatedAt;
+
+    @OneToMany(
+            mappedBy = "robot",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JsonManagedReference
+    private List<ControlData> controlDataList;
 
     public String getRobotIp() {
         return robotIp1 + "." + robotIp2 + "." + robotIp3 + "." + robotIp4;
