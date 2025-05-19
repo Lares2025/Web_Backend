@@ -38,5 +38,10 @@ public class ControlData {
 
     private int controlAmount;
 
+    @Enumerated(EnumType.STRING)
     private ControlType controlDirection;
+
+    public String getControlCreatedAt() {
+        return controlCreatedAt.format(DateTimeFormatter.ofPattern("yy년 MM월 dd일"));
+    }
 }
