@@ -1,13 +1,17 @@
 package last.lares.domain.control;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import last.lares.domain.control.types.ControlType;
+import last.lares.domain.robot.Robot;
+import last.lares.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Builder
 @Entity
@@ -22,9 +26,15 @@ public class ControlData {
 
     private LocalDateTime controlCreatedAt;
 
-    private String userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId")
+    @JsonBackReference
+    private User user;
 
-    private int robotId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "robotId")
+    @JsonBackReference
+    private Robot robot;
 
     private int controlAmount;
 
