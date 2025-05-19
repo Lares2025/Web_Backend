@@ -8,7 +8,9 @@ import last.lares.domain.control.types.ControlType;
 import last.lares.domain.robot.repository.RobotRepository;
 import last.lares.domain.user.User;
 import last.lares.domain.user.repository.UserRepository;
+import last.lares.global.dto.CommonResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,6 +37,19 @@ public class DataService {
 
         return DataListDto.builder()
                 .dataInfoList(dataInfoList)
+                .build();
+    }
+
+    @Transactional
+    public CommonResponseDto deleteData(int controlId) {
+        if (!dataRepository.existsById(controlId)) {
+            throw new UsernameNotFoundException("존재하지 않는 데이터입니다 : " + controlId);
+        }
+
+        dataRepository.deleteById(controlId);
+
+        return CommonResponseDto.builder()
+                .message("데이터가 정상적으로 삭제되었습니다!")
                 .build();
     }
 }
