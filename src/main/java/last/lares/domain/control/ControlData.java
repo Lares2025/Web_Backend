@@ -10,7 +10,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Builder
@@ -24,7 +24,7 @@ public class ControlData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int controlId;
 
-    private LocalDateTime controlCreatedAt;
+    private LocalDate controlCreatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")

@@ -12,7 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -52,7 +52,7 @@ public class UserService {
                 .userPassword(userPassword)
                 .userAddress(request.getUserAddress())
                 .userRole(UserRole.ROLE_USER)
-                .userCreatedAt(LocalDateTime.now())
+                .userCreatedAt(LocalDate.now())
                 .build();
 
         userRepository.save(user);

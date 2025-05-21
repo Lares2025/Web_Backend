@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -46,7 +46,7 @@ public class RobotService {
                 .robotIp3(request.getRobotIp3())
                 .robotIp4(request.getRobotIp4())
                 .robotName(request.getRobotName())
-                .robotCreatedAt(LocalDateTime.now())
+                .robotCreatedAt(LocalDate.now())
                 .build();
 
         robotRepository.save(robot);

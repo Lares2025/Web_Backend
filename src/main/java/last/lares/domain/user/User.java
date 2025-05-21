@@ -9,7 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
-    private LocalDateTime userCreatedAt;
+    private LocalDate userCreatedAt;
 
     @OneToMany(
             mappedBy = "user",
