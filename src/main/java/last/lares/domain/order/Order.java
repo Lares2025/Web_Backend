@@ -8,7 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Builder
@@ -22,15 +22,15 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int orderId;
 
-    private LocalDateTime orderCreatedAt;
+    private LocalDate orderCreatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "sendUserId")
     @JsonBackReference
     private User sendUser;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "receiveUserId")
     @JsonBackReference
     private User receiveUser;
 
@@ -40,7 +40,7 @@ public class Order {
 
     private String orderMemo;
 
-    private LocalDateTime deliveryDate;
+    private LocalDate deliveryDate;
 
     public String getOrderCreatedAt() {
         return orderCreatedAt.format(DateTimeFormatter.ofPattern("yy년 MM월 dd일"));
