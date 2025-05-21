@@ -1,6 +1,7 @@
 package last.lares.domain.order.presentation;
 
 import last.lares.domain.order.presentation.dto.OrderCreateRequestDto;
+import last.lares.domain.order.presentation.dto.OrderDto;
 import last.lares.domain.order.presentation.dto.OrderListDto;
 import last.lares.domain.order.service.OrderService;
 import last.lares.global.dto.CommonResponseDto;
@@ -21,6 +22,27 @@ public class OrderController {
             OrderListDto orderListDto = orderService.allOrder();
 
             return ResponseEntity.ok().body(orderListDto);
+        } catch (Exception e) {
+            CommonResponseDto response = CommonResponseDto.builder()
+                    .message("내부 서버 에러가 발생하였습니다.")
+                    .build();
+
+            return ResponseEntity.internalServerError().body(response);
+        }
+    }
+
+    @GetMapping("/{orderId}")
+    public ResponseEntity<?> getOrder(@PathVariable("orderId") int orderId) {
+        try {
+            OrderDto orderDto = orderService.getOrder(orderId);
+
+            return ResponseEntity.ok().body(orderDto);
+        } catch (UsernameNotFoundException e) {
+            CommonResponseDto response = CommonResponseDto.builder()
+                    .message(e.getMessage())
+                    .build();
+
+            return ResponseEntity.badRequest().body(response);
         } catch (Exception e) {
             CommonResponseDto response = CommonResponseDto.builder()
                     .message("내부 서버 에러가 발생하였습니다.")

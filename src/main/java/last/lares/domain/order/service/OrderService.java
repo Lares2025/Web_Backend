@@ -3,6 +3,7 @@ package last.lares.domain.order.service;
 import jakarta.transaction.Transactional;
 import last.lares.domain.order.Order;
 import last.lares.domain.order.presentation.dto.OrderCreateRequestDto;
+import last.lares.domain.order.presentation.dto.OrderDto;
 import last.lares.domain.order.presentation.dto.OrderListDto;
 import last.lares.domain.order.repository.OrderRepository;
 import last.lares.domain.user.User;
@@ -41,6 +42,23 @@ public class OrderService {
 
         return OrderListDto.builder()
                 .orderInfoList(orderInfoList)
+                .build();
+    }
+
+    @Transactional
+    public OrderDto getOrder(int orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 데이터입니다 : " + orderId));
+
+        return OrderDto.builder()
+                .orderId(order.getOrderId())
+                .orderCreatedAt(order.getOrderCreatedAt())
+                .sendUserId(order.getSendUser().getUserId())
+                .receiveUserId(order.getReceiveUser().getUserId())
+                .orderItem(order.getOrderItem())
+                .orderAmount(order.getOrderAmount())
+                .orderMemo(order.getOrderMemo())
+                .deliveryDate(order.getDeliveryDate())
                 .build();
     }
 
