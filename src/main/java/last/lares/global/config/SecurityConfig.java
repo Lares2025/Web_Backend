@@ -3,6 +3,8 @@ package last.lares.global.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import last.lares.global.config.filter.JwtFilter;
 import last.lares.global.config.filter.LoginFilter;
+import last.lares.global.config.security.CustomAccessDeniedHandler;
+import last.lares.global.config.security.CustomAuthenticationEntryPoint;
 import last.lares.global.config.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -68,6 +70,12 @@ public class SecurityConfig {
 
                 .addFilterBefore(new JwtFilter(objectMapper, jwtUtil), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class)
+
+                .exceptionHandling(
+                        ex -> ex
+                                .authenticationEntryPoint(new CustomAuthenticationEntryPoint(objectMapper))
+                                .accessDeniedHandler(new CustomAccessDeniedHandler(objectMapper))
+                )
 
                 .sessionManagement(
                         session -> session
