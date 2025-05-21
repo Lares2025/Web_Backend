@@ -21,6 +21,10 @@ server:
     8001
   servlet:
     context-path: /lares/api
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
   forward-headers-strategy: NATIVE
 
 jwt:
