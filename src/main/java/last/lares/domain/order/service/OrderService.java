@@ -88,6 +88,23 @@ public class OrderService {
         return createCommonResponse("신규 등록에 성공하였습니다!");
     }
 
+    @Transactional
+    public CommonResponseDto updateOrder(OrderDto request) {
+        int orderId = request.getOrderId();
+        String sendUserId = request.getSendUserId();
+        String receiveUserId = request.getReceiveUserId();
+
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 데이터입니다 : " + orderId));
+
+        User receiveUser = userRepository.findById(receiveUserId)
+                .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 수신자입니다 : " + receiveUserId));
+
+        order.update(request, receiveUser);
+
+        return createCommonResponse("배송 내역이 정상적으로 수정되었습니다!");
+    }
+
     private CommonResponseDto createCommonResponse(String message) {
         return CommonResponseDto.builder()
                 .message(message)

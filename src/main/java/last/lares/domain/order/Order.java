@@ -2,6 +2,7 @@ package last.lares.domain.order;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import last.lares.domain.order.presentation.dto.OrderDto;
 import last.lares.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -48,5 +49,13 @@ public class Order {
 
     public String getDeliveryDate() {
         return deliveryDate.format(DateTimeFormatter.ofPattern("yy년 MM월 dd일"));
+    }
+
+    public void update(OrderDto request, User receiveUser) {
+        setReceiveUser(receiveUser);
+        setOrderItem(request.getOrderItem());
+        setOrderAmount(request.getOrderAmount());
+        setOrderMemo(request.getOrderMemo());
+        setDeliveryDate(LocalDate.parse(request.getDeliveryDate(), DateTimeFormatter.ofPattern("yy년 MM월 dd일")));
     }
 }
