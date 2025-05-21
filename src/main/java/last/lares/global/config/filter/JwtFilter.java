@@ -6,10 +6,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import last.lares.domain.auth.CustomUserDetails;
-import last.lares.domain.auth.dto.FilterErrorDto;
 import last.lares.domain.user.User;
 import last.lares.domain.user.types.UserRole;
 import last.lares.global.config.utils.JwtUtil;
+import last.lares.global.dto.CommonResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -62,8 +62,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response);
         } catch (Exception e) {
-            FilterErrorDto responseBody = FilterErrorDto.builder()
-                    .status(false)
+            CommonResponseDto responseBody = CommonResponseDto.builder()
                     .message(e.getMessage())
                     .build();
 
