@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -55,7 +55,7 @@ public class DataService {
                 .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 로봇입니다 : " + robotId));
 
         ControlData controlData = ControlData.builder()
-                .controlCreatedAt(LocalDateTime.now())
+                .controlCreatedAt(LocalDate.now())
                 .user(user)
                 .robot(robot)
                 .controlAmount(controlAmount)

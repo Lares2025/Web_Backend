@@ -9,7 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class Robot {
 
     private String robotName;
 
-    private LocalDateTime robotCreatedAt;
+    private LocalDate robotCreatedAt;
 
     @OneToMany(
             mappedBy = "robot",
