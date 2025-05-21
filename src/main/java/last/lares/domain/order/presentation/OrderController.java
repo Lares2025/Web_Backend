@@ -94,4 +94,25 @@ public class OrderController {
             return ResponseEntity.internalServerError().body(responseDto);
         }
     }
+
+    @DeleteMapping("/{orderId}")
+    public ResponseEntity<?> deleteOrder(@PathVariable int orderId) {
+        try {
+            CommonResponseDto response = orderService.deleteOrder(orderId);
+
+            return ResponseEntity.ok().body(response);
+        } catch (UsernameNotFoundException e) {
+            CommonResponseDto response = CommonResponseDto.builder()
+                    .message(e.getMessage())
+                    .build();
+
+            return ResponseEntity.badRequest().body(response);
+        } catch (Exception e) {
+            CommonResponseDto responseDto = CommonResponseDto.builder()
+                    .message("내부 서버 에러가 발생하였습니다 : " + e.getMessage())
+                    .build();
+
+            return ResponseEntity.internalServerError().body(responseDto);
+        }
+    }
 }

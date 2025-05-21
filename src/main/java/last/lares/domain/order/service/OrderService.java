@@ -105,6 +105,17 @@ public class OrderService {
         return createCommonResponse("배송 내역이 정상적으로 수정되었습니다!");
     }
 
+    @Transactional
+    public CommonResponseDto deleteOrder(int orderId) {
+        if (!orderRepository.existsById(orderId)) {
+            throw new UsernameNotFoundException("존재하지 않는 내역입니다 : " + orderId);
+        }
+
+        orderRepository.deleteById(orderId);
+
+        return createCommonResponse("배송 내역이 정상적으로 삭제되었습니다!");
+    }
+
     private CommonResponseDto createCommonResponse(String message) {
         return CommonResponseDto.builder()
                 .message(message)
