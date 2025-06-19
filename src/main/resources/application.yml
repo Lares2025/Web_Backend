@@ -30,4 +30,3 @@ server:
 jwt:
   secret: ${JWT_KEY}
   expiration: 3600000
-  expirationVerify: 300000
