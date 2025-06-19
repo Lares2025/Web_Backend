@@ -9,13 +9,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.spec.SecretKeySpec;
+import java.security.Key;
 import java.util.Date;
 
 @Component
-@RequiredArgsConstructor
 public class JwtUtil {
-    @Value("${jwt.secret}")
-    private String secretKey;
+    private final Key key;
+
+    public JwtUtil(@Value("${jwt.secret}") String secretKey) {
+        this.key = new SecretKeySpec(secretKey.getBytes(), SignatureAlgorithm.HS256.getJcaName());
+    }
 
     @Value("${jwt.expiration}")
     private Long exprTime;
@@ -26,20 +30,18 @@ public class JwtUtil {
          claims.put("userRole", userRole);
          Date now = new Date();
 
-         String token = Jwts.builder()
+         return Jwts.builder()
                  .setClaims(claims)
                  .setIssuedAt(now)
                  .setExpiration(new Date(now.getTime() + exprTime))
-                 .signWith(SignatureAlgorithm.HS256, secretKey)
+                 .signWith(key, SignatureAlgorithm.HS256)
                  .compact();
-
-         return token;
     }
 
     public String getUserId(String token) {
         try {
             return Jwts.parserBuilder()
-                    .setSigningKey(secretKey)
+                    .setSigningKey(key)
                     .build()
                     .parseClaimsJws(token)
                     .getBody()
@@ -52,7 +54,7 @@ public class JwtUtil {
     public String getUserRole(String token) {
         try {
             return Jwts.parserBuilder()
-                    .setSigningKey(secretKey)
+                    .setSigningKey(key)
                     .build()
                     .parseClaimsJws(token)
                     .getBody()
@@ -65,7 +67,7 @@ public class JwtUtil {
     public boolean isExpired(String token) {
         try {
             Jws<Claims> claims = Jwts.parserBuilder()
-                    .setSigningKey(secretKey)
+                    .setSigningKey(key)
                     .build()
                     .parseClaimsJws(token);
             return claims.getBody().getExpiration().before(new Date());
