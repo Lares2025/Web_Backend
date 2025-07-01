@@ -65,6 +65,8 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/order/**").authenticated()
                                 .requestMatchers("/order/**").hasRole("ADMIN")
 
+                                .requestMatchers("/sig").permitAll()
+
                                 .anyRequest().authenticated()
                 )
 
