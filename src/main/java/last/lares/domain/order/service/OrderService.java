@@ -1,6 +1,7 @@
 package last.lares.domain.order.service;
 
 import jakarta.transaction.Transactional;
+import last.lares.domain.auth.CustomUserDetails;
 import last.lares.domain.order.Order;
 import last.lares.domain.order.presentation.dto.OrderCreateRequestDto;
 import last.lares.domain.order.presentation.dto.OrderDto;
@@ -10,6 +11,7 @@ import last.lares.domain.user.User;
 import last.lares.domain.user.repository.UserRepository;
 import last.lares.global.dto.CommonResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -64,7 +66,8 @@ public class OrderService {
 
     @Transactional
     public CommonResponseDto newOrder(OrderCreateRequestDto request) {
-        String sendUserId = request.getSendUserId();
+        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String sendUserId = userDetails.getUserId();
         String receiveUserId = request.getReceiveUserId();
 
         User sendUser = userRepository.findById(sendUserId)
@@ -91,7 +94,6 @@ public class OrderService {
     @Transactional
     public CommonResponseDto updateOrder(OrderDto request) {
         int orderId = request.getOrderId();
-        String sendUserId = request.getSendUserId();
         String receiveUserId = request.getReceiveUserId();
 
         Order order = orderRepository.findById(orderId)
