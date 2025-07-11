@@ -8,7 +8,6 @@ import java.time.LocalDate;
 @Builder
 @Getter
 public class OrderCreateRequestDto {
-    private String sendUserId;
     private String receiveUserId;
     private String orderItem;
     private int orderAmount;
