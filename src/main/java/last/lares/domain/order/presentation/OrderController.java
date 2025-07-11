@@ -7,7 +7,6 @@ import last.lares.domain.order.service.OrderService;
 import last.lares.global.dto.CommonResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 

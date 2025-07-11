@@ -94,7 +94,6 @@ public class OrderService {
     @Transactional
     public CommonResponseDto updateOrder(OrderDto request) {
         int orderId = request.getOrderId();
-        String sendUserId = request.getSendUserId();
         String receiveUserId = request.getReceiveUserId();
 
         Order order = orderRepository.findById(orderId)
