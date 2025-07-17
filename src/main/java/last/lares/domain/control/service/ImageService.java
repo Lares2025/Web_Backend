@@ -14,7 +14,10 @@ import java.io.FileNotFoundException;
 public class ImageService {
     private final ImageRepository imageRepository;
 
-    public CommonResponseDto saveImage(byte[] image) {
+    public CommonResponseDto saveImage(byte[] image) throws FileNotFoundException {
+        if (image == null) {
+            throw new FileNotFoundException("이미지가 존재하지 않습니다.");            
+        }
         imageRepository.save(image);
         return CommonResponseDto.builder()
                 .message("이미지가 저장되었습니다.")

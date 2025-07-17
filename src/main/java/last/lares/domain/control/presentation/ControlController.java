@@ -53,6 +53,8 @@ public class ControlController {
     public ResponseEntity<?> saveImage(@RequestParam("file") MultipartFile file) {
         try {
             return ResponseEntity.ok(imageService.saveImage(file.getBytes()));
+        } catch (FileNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("이미지 저장 실패: " + e.getMessage());
         }
@@ -66,8 +68,7 @@ public class ControlController {
                     .body(imageService.getLastestImage());
         } catch (FileNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.internalServerError().body("이미지 불러오기 실패: " + e.getMessage());
         }
     }
