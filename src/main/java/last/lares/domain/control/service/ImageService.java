@@ -2,6 +2,7 @@ package last.lares.domain.control.service;
 
 import jakarta.transaction.Transactional;
 import last.lares.domain.control.repository.ImageRepository;
+import last.lares.global.dto.CommonResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +14,11 @@ import java.io.FileNotFoundException;
 public class ImageService {
     private final ImageRepository imageRepository;
 
-    public String saveImage(byte[] image) {
+    public CommonResponseDto saveImage(byte[] image) {
         imageRepository.save(image);
-        return "이미지가 저장되었습니다.";
+        return CommonResponseDto.builder()
+                .message("이미지가 저장되었습니다.")
+                .build();
     }
 
     public byte[] getLastestImage() throws FileNotFoundException {
