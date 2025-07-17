@@ -60,6 +60,7 @@ public class SecurityConfig {
 
                                 .requestMatchers("/robot/**").hasRole("ADMIN")
 
+                                .requestMatchers("/control/img").permitAll()
                                 .requestMatchers("/control/**").hasRole("ADMIN")
 
                                 .requestMatchers(HttpMethod.GET, "/order/**").authenticated()
